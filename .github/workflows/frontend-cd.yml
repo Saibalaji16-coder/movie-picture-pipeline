@@ -8,7 +8,8 @@ on:
       - "starter/frontend/**"
 
   workflow_dispatch:
-
+env:
+  REACT_APP_MOVIE_API_URL: ${{ vars.REACT_APP_MOVIE_API_URL }}
 jobs:
   lint:
     name: Frontend Lint
@@ -92,7 +93,7 @@ jobs:
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/frontend:${{ github.sha }}
           build-args: |
-            REACT_APP_MOVIE_API_URL=http://localhost:5000
+              REACT_APP_MOVIE_API_URL=${{ env.REACT_APP_MOVIE_API_URL }}
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
